@@ -69,7 +69,7 @@ const Homedialogbox = (props) => {
         selectedDate: formattedDate,
       };
 
-      await axios.post("http://localhost:8000/", {
+      await axios.post("https://liquid-ink-production-api.vercel.app/", {
         newRecord: recordToSend,
       });
 
