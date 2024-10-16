@@ -14,10 +14,10 @@ app.use(cors());
 const port = process.env.PORT || 8000;
 
 app.get("/", async (req, res) => {
-  // const requestedDate = req.query.date;
-  // const searchdata = await records.find({ Date: requestedDate });
-  // res.send(searchdata);
-  res.send("success");
+  const requestedDate = req.query.date;
+  const searchdata = await records.find({ Date: requestedDate });
+  res.send(searchdata);
+  //res.send("success");
 })
 
 app.post("/", async (req, res) => {
