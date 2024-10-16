@@ -11,7 +11,7 @@ app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(cors());
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 app.get("/", async (req, res) => {
   const requestedDate = req.query.date;
