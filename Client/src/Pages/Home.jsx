@@ -7,6 +7,7 @@ import Homedialogbox from "../Components/Homedialogbox/Homedialogbox";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import axios from "axios";
+import * as XLSX from "xlsx";
 
 dayjs.extend(customParseFormat);
 
@@ -49,6 +50,29 @@ const Home = () => {
     sendGetRequest(selectedDate);
   }, []);
 
+  const downloadExcelFile = () => {
+
+    const worksheetData = newData.map((record) => ({
+      "Job ID": record.JobId,
+      "Item Code": record.ItemCode,
+      "In Qty": record.InQty,
+      "Out Qty": record.OutQty,
+      Group: record.group,
+      Machine: record.Machine,
+      "Employee ID": record.EmployeeID,
+      Date: record.Date,
+      "On Time": record.OnTime,
+      "Off Time": record.OffTime,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Records");
+
+    XLSX.writeFile(workbook, "table_data.xlsx");
+  };
+
   return (
     <div>
       <Header />
@@ -74,6 +98,7 @@ const Home = () => {
         <Button
           variant="contained"
           size="medium"
+          onClick={downloadExcelFile}
           sx={{
             height: "45px",
             alignSelf: "center",

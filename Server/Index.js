@@ -16,7 +16,6 @@ const port = process.env.PORT;
 app.get("/", async (req, res) => {
   const requestedDate = req.query.date;
   const searchdata = await records.find({ Date: requestedDate });
-  console.log(searchdata);
   res.send(searchdata);
 })
 

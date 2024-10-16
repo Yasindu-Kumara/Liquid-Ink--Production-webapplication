@@ -59,9 +59,13 @@ const Homedialogbox = (props) => {
   const handleCreateNewRecord = async () => {
     try {
       const formattedDate = dayjs(newRecord.selectedDate).format("DD/MM/YYYY");
+      const formattedonTime = dayjs(newRecord.onTime).format('HH:mm');
+      const formattedoffTime = dayjs(newRecord.offTime).format('HH:mm');
 
       const recordToSend = {
         ...newRecord,
+        onTime: formattedonTime,
+        offTime: formattedoffTime,
         selectedDate: formattedDate,
       };
 
