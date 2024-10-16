@@ -29,7 +29,7 @@ const Home = () => {
     try {
       const formattedDate = dayjs(newDate).format("DD/MM/YYYY");
 
-      const response = await axios.get("http://localhost:8000/", {
+      const response = await axios.get("https://liquid-ink-production-api.vercel.app/", {
         params: {
           date: formattedDate,
         },
