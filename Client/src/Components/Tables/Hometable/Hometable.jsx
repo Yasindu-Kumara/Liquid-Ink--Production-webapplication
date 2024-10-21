@@ -7,18 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableVirtuoso } from "react-virtuoso";
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import dayjs from "dayjs";
 
-const sample = [
-  ["Frozen yoghurt", 159, 6.0, 24, 4.0],
-  ["Ice cream sandwich", 237, 9.0, 37, 4.3],
-  ["Eclair", 262, 16.0, 24, 6.0],
-  ["Cupcake", 305, 3.7, 67, 4.3],
-  ["Gingerbread", 356, 16.0, 49, 3.9],
-];
-
-function createData(id, dessert, calories, fat, carbs, protein) {
-  return { id, dessert, calories, fat, carbs, protein };
-}
 
 const columns = [
   {
@@ -64,22 +57,17 @@ const columns = [
   },
   {
     width: 110,
-    label: "In",
-    dataKey: "OnTime",
+    label: "Date",
+    dataKey: "Date",
     numeric: true,
   },
   {
     width: 110,
-    label: "Out",
-    dataKey: "OffTime",
-    numeric: true,
+    label: "Action",
+    dataKey: "action",
+    numeric: false,
   },
 ];
-
-const rows = Array.from({ length: 200 }, (_, index) => {
-  const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-  return createData(index, ...randomSelection);
-});
 
 const VirtuosoTableComponents = {
   Scroller: React.forwardRef((props, ref) => (
@@ -107,7 +95,7 @@ function fixedHeaderContent() {
         <TableCell
           key={column.dataKey}
           variant="head"
-          align={column.numeric || false ? "right" : "left"}
+          align="center"
           style={{ width: column.width }}
           sx={{ backgroundColor: "background.paper" }}
         >
@@ -119,14 +107,38 @@ function fixedHeaderContent() {
 }
 
 function rowContent(_index, row) {
+  const currentDate = dayjs().format("DD/MM/YYYY"); 
+  const isSameDate = currentDate === row.Date; 
+
   return (
     <>
       {columns.map((column) => (
         <TableCell
           key={column.dataKey}
-          align={column.numeric || false ? "right" : "left"}
+          align="center"
         >
-          {row[column.dataKey]} 
+          {column.dataKey === "action" ? (
+            <div>
+              <IconButton
+                aria-label="edit"
+                color="primary"
+                onClick={() => console.log(`Edit row: ${row.JobId}`)}
+                disabled={!isSameDate} 
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                aria-label="delete"
+                color="secondary"
+                onClick={() => console.log(`Delete row: ${row.JobId}`)}
+                disabled={!isSameDate} 
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          ) : (
+            row[column.dataKey]
+          )}
         </TableCell>
       ))}
     </>
@@ -134,9 +146,8 @@ function rowContent(_index, row) {
 }
 
 const Hometable = (props) => {
-  console.log(props.data);
   return (
-    <Paper style={{ marginTop:"20px", height: 350, width: "100%" }}>
+    <Paper style={{ marginTop: "20px", height: 350, width: "100%" }}>
       <TableVirtuoso
         data={props.data}
         components={VirtuosoTableComponents}
