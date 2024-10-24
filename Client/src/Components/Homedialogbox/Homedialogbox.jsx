@@ -59,8 +59,8 @@ const Homedialogbox = (props) => {
   const handleCreateNewRecord = async () => {
     try {
       const formattedDate = dayjs(newRecord.selectedDate).format("DD/MM/YYYY");
-      const formattedonTime = dayjs(newRecord.onTime).format('HH:mm');
-      const formattedoffTime = dayjs(newRecord.offTime).format('HH:mm');
+      const formattedonTime = dayjs(newRecord.onTime).format("HH:mm");
+      const formattedoffTime = dayjs(newRecord.offTime).format("HH:mm");
 
       const recordToSend = {
         ...newRecord,
@@ -132,6 +132,33 @@ const Homedialogbox = (props) => {
               </FormControl>
             </Grid2>
             <Grid2 size={6}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Employee ID
+                </InputLabel>
+                <Select
+                  labelId="employee-label"
+                  id="employee"
+                  name="employeeValue"
+                  value={newRecord.employeeValue}
+                  onChange={handleInputChange}
+                  label="Employee ID"
+                >
+                  {employees.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid2>
+            <Grid2 size={6}>
+              <Datepicker
+                currentDate={newRecord.selectedDate}
+                onChange={handleDateChange}
+              />
+            </Grid2>
+            <Grid2 size={6}>
               <TextField
                 id="outlined-basic"
                 label="In Qty"
@@ -191,33 +218,7 @@ const Homedialogbox = (props) => {
                 </Select>
               </FormControl>
             </Grid2>
-            <Grid2 size={6}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Employee ID
-                </InputLabel>
-                <Select
-                  labelId="employee-label"
-                  id="employee"
-                  name="employeeValue"
-                  value={newRecord.employeeValue}
-                  onChange={handleInputChange}
-                  label="Employee ID"
-                >
-                  {employees.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid2>
-            <Grid2 size={6}>
-              <Datepicker
-                currentDate={newRecord.selectedDate}
-                onChange={handleDateChange}
-              />
-            </Grid2>
+
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Grid2 size={6}>
                 <TimePicker
