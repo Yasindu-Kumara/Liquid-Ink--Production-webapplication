@@ -54,7 +54,7 @@ const Hometable = (props) => {
 
   const handleConfirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/delete/${rowToDelete._id}`);
+      await axios.delete(`https://liquid-ink-production-api.vercel.app/delete/${rowToDelete._id}`);
       setIsDeleteDialogOpen(false);
       props.onDelete(rowToDelete._id);
       window.location.reload();

@@ -113,7 +113,7 @@ const Updatedialogbox = (props) => {
       };
 
       await axios.put(
-        `http://localhost:8000/update/${props.data._id}`,
+        `https://liquid-ink-production-api.vercel.app/update/${props.data._id}`,
         recordToSend
       );
 
